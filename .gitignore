@@ -1,2 +1,7 @@
+.env
+.envrc
+.python-version   # Common ti have it to avoid conflict for other contributors
+
+
 test_data
 test_data/*

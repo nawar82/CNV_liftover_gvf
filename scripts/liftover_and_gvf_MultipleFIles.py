@@ -39,15 +39,17 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 LIFTOVER_BIN = os.path.join(SCRIPT_DIR, "helper", "liftOver")
 CHAIN_FILE = os.path.join(SCRIPT_DIR, "helper", "hg38ToHg19.over.chain.gz")
 RESULTS_DIR = os.path.join(SCRIPT_DIR, "..", "test_data", "results")
+TEMP_DIR = os.path.join(SCRIPT_DIR, "..", "test_data", "temp")
 
 # Ensure results directory exists
 os.makedirs(RESULTS_DIR, exist_ok=True)
+os.makedirs(TEMP_DIR, exist_ok=True)
 
 def liftover_position(chrom, pos):
     """Lifts over a genomic position using UCSC liftOver tool."""
-    input_file = "tmp_liftover_input.bed"
-    output_file = "tmp_liftover_output.bed"
-    unlifted_file = "tmp_unlifted.bed"
+    input_file = os.path.join(TEMP_DIR, "tmp_liftover_input.bed")
+    output_file = os.path.join(TEMP_DIR, "tmp_liftover_output.bed")
+    unlifted_file = os.path.join(TEMP_DIR, "tmp_unlifted.bed")
 
     with open(input_file, "w") as f:
         f.write(f"{chrom}\t{pos-1}\t{pos}\n")
