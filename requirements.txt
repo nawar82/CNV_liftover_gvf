@@ -1,0 +1,2 @@
+#subprocess, os, and argparse are built-in Python modules, so they don’t need to be listed in requirements.txt
+vcfpy==0.13.8
