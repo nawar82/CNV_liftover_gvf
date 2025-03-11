@@ -23,5 +23,6 @@ VCF data into GVF format.
 2. Run the script:
 ```bash
 python Liftover_and_gvf.py -i file_list.txt
+´´´
 
-Developed by Nawar Dalila
+**Developed by Nawar Dalila**
