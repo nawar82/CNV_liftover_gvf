@@ -1,2 +1,0 @@
-test_data/input.vcf
-test_data/input2.vcf
