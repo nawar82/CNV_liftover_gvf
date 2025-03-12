@@ -75,6 +75,9 @@ def write_gvf_header(output_gvf):
         gvf_out.write("##source GATK_PostprocessGermlineCNVCalls\n")
         gvf_out.write("##attribute-definition ID Unique identifier for the variant\n")
         gvf_out.write("##attribute-definition Reference_seq The reference sequence\n")
+        gvf_out.write("##attribute-definition Genotype Genotype of the segment\n")
+        gvf_out.write("##attribute-definition Copy_number Copy number of the segment\n")
+        gvf_out.write("##attribute-definition Num_points Number of points in the segment\n")
         gvf_out.write("#seqid\tsource\ttype\tstart\tend\tscore\tstrand\tphase\tattributes\n")
 
 def process_vcf(input_vcf, output_gvf):
@@ -112,7 +115,14 @@ def process_vcf(input_vcf, output_gvf):
             reference_seq = record.REF
             id_value = f"CNV_{chrom_hg19}_{start_liftover}_{end_liftover}"
 
-            attributes = f"ID={id_value};Reference_seq={reference_seq}"
+            # Extract GT, CN, and NP values
+            sample_calls = record.calls[0].data
+
+            gt = sample_calls["GT"]
+            cn = sample_calls["CN"]
+            np = sample_calls["NP"]
+
+            attributes = f"ID={id_value};Reference_seq={reference_seq};Genotype={gt};Copy_number={cn};Num_points:{np}"
             gvf_out.write(f"{chrom_hg19}\t{source}\t{variant_type}\t{start_liftover}\t{end_liftover}\t{score}\t{strand}\t{phase}\t{attributes}\n")
 
 
