@@ -72,18 +72,16 @@ def write_gvf_header(output_gvf):
         gvf_out.write("##gvf-version 1.10\n")
         gvf_out.write("##species Homo sapiens\n")
         gvf_out.write("##genome-build hg19\n")
-        gvf_out.write("##source GATK\n")
+        gvf_out.write("##source GATK_PostprocessGermlineCNVCalls\n")
         gvf_out.write("##attribute-definition ID Unique identifier for the variant\n")
         gvf_out.write("##attribute-definition Reference_seq The reference sequence\n")
         gvf_out.write("#seqid\tsource\ttype\tstart\tend\tscore\tstrand\tphase\tattributes\n")
 
-def process_vcf(input_vcf, output_vcf, output_gvf):
+def process_vcf(input_vcf, output_gvf):
     """Reads CNV VCF, performs liftover, and converts to GVF."""
     write_gvf_header(output_gvf)
 
     reader = vcfpy.Reader.from_path(input_vcf)
-    header = reader.header
-    writer = vcfpy.Writer.from_path(output_vcf, header)
 
     with open(output_gvf, "a") as gvf_out:
         for record in reader:
@@ -106,16 +104,7 @@ def process_vcf(input_vcf, output_vcf, output_gvf):
             if None in (chrom_hg19, start_hg19, start_liftover, end_liftover):
                 continue
 
-            record.CHROM = chrom_hg19
-            record.POS = start_hg19
-            record.ID = [f"CNV_{chrom_hg19}_{start_liftover}_{end_liftover}"]
-
-            if "END" in record.INFO:
-                record.INFO["END"] = end_liftover
-
-            writer.write_record(record)
-
-            source = "GATK"
+            source = "GATK_PostprocessGermlineCNVCalls"
             variant_type = record.ALT[0].value if record.ALT else "."
             score = record.QUAL if record.QUAL is not None else "."
             strand = "."
@@ -126,7 +115,6 @@ def process_vcf(input_vcf, output_vcf, output_gvf):
             attributes = f"ID={id_value};Reference_seq={reference_seq}"
             gvf_out.write(f"{chrom_hg19}\t{source}\t{variant_type}\t{start_liftover}\t{end_liftover}\t{score}\t{strand}\t{phase}\t{attributes}\n")
 
-    writer.close()
 
 # Command-line argument parsing
 parser = argparse.ArgumentParser(description="Liftover CNV VCF from hg38 to hg19 and convert to GVF")
@@ -144,10 +132,9 @@ for vcf_file in vcf_files:
         continue
 
     base_name = os.path.splitext(os.path.basename(vcf_file))[0]
-    output_vcf = os.path.join(RESULTS_DIR, f"{base_name}_hg19.vcf")
     output_gvf = os.path.join(RESULTS_DIR, f"{base_name}_hg19.gvf")
 
-    print(f"Processing {vcf_file} -> {output_vcf}, {output_gvf}")
-    process_vcf(vcf_file, output_vcf, output_gvf)
+    print(f"Processing {vcf_file} -> {output_gvf}")
+    process_vcf(vcf_file, output_gvf)
 
 print("Processing complete!")
