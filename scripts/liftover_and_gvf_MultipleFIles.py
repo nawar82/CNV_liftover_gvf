@@ -116,7 +116,7 @@ def process_vcf(input_vcf, output_gvf):
             id_value = f"CNV_{chrom_hg19}_{start_liftover}_{end_liftover}"
 
             # Extract GT, CN, and NP values
-            sample_calls = record.calls[0].data
+            sample_calls = record.calls[0].data         # basically calls[0] list is a Call class that has data as an attribute
 
             gt = sample_calls["GT"]
             cn = sample_calls["CN"]
