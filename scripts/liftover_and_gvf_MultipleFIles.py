@@ -109,6 +109,10 @@ def process_vcf(input_vcf, output_gvf):
 
             source = "GATK_PostprocessGermlineCNVCalls"
             variant_type = record.ALT[0].value if record.ALT else "."
+
+            if variant_type == "." and chrom_hg19 != "chrX":            # Keep only CNVs with an event and everything in chrX for further logic
+                continue
+
             score = record.QUAL if record.QUAL is not None else "."
             strand = "."
             phase = "."
@@ -117,12 +121,13 @@ def process_vcf(input_vcf, output_gvf):
 
             # Extract GT, CN, and NP values
             sample_calls = record.calls[0].data         # basically calls[0] list is a Call class that has data as an attribute
+            sample_name = record.calls[0].sample
 
             gt = sample_calls["GT"]
             cn = sample_calls["CN"]
             np = sample_calls["NP"]
 
-            attributes = f"ID={id_value};Reference_seq={reference_seq};Genotype={gt};Copy_number={cn};Num_points:{np}"
+            attributes = f"ID={id_value};Reference_seq={reference_seq};Genotype={gt};Copy_number={cn};Num_points:{np};sample:{sample_name}"
             gvf_out.write(f"{chrom_hg19}\t{source}\t{variant_type}\t{start_liftover}\t{end_liftover}\t{score}\t{strand}\t{phase}\t{attributes}\n")
 
 
