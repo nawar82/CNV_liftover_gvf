@@ -1,12 +1,10 @@
-FROM python:3.8.12-slim
+FROM python:3.10.6-slim
 
 COPY requirements.txt requirements.txt
 COPY scripts scripts
 COPY setup.py setup.py
 
-RUN pip install -e .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# For local
-#CMD uvicorn package_folder.api_file:app --host 0.0.0.0
-# For deployment
-#CMD uvicorn package_folder.api_file:app --host 0.0.0.0  --port $PORT
+
+#CMD [ "python", "./scripts/liftover_and_gvf_MultipleFIles.py -i ./test_data/file_list.txt" ]
