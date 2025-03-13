@@ -45,6 +45,11 @@ TEMP_DIR = os.path.join(SCRIPT_DIR, "..", "test_data", "temp")
 os.makedirs(RESULTS_DIR, exist_ok=True)
 os.makedirs(TEMP_DIR, exist_ok=True)
 
+def extract_sex_from_sample(sample_name):
+    """Extracts sex information from the sample name."""
+    identifier = sample_name.split("-")[0]
+    return "male" if identifier.endswith("m") else "female"
+
 def liftover_position(chrom, pos):
     """Lifts over a genomic position using UCSC liftOver tool."""
     input_file = os.path.join(TEMP_DIR, "tmp_liftover_input.bed")
@@ -121,11 +126,19 @@ def process_vcf(input_vcf, output_gvf):
 
             # Extract GT, CN, and NP values
             sample_calls = record.calls[0].data         # basically calls[0] list is a Call class that has data as an attribute
-            sample_name = record.calls[0].sample
-
             gt = sample_calls["GT"]
             cn = sample_calls["CN"]
             np = sample_calls["NP"]
+
+            sample_name = record.calls[0].sample
+            sample_sex = extract_sex_from_sample(sample_name)
+            if sample_sex == "male":
+                if cn == 1:
+                    continue  # Skip this variant for males with CN == 1
+                elif cn == 0:
+                    variant_type = "DEL"
+                elif cn >= 2:
+                    variant_type = "DUP"
 
             attributes = f"ID={id_value};Reference_seq={reference_seq};Genotype={gt};Copy_number={cn};Num_points:{np};sample:{sample_name}"
             gvf_out.write(f"{chrom_hg19}\t{source}\t{variant_type}\t{start_liftover}\t{end_liftover}\t{score}\t{strand}\t{phase}\t{attributes}\n")
