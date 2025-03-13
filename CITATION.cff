@@ -6,3 +6,4 @@ authors:
 title: "Liftover and GVF Conversion for CNV Reports"
 version: 1.0.0
 url: "https://github.com/nawar82/CNV_liftover_gvf"
+license: "MIT"
