@@ -35,5 +35,6 @@ python Liftover_and_gvf.py -i file_list.txt
 ```bash
 python Liftover_and_gvf.py -i file_list.txt --no-liftover
 ```
+[![DOI](https://zenodo.org/badge/946604758.svg)](https://doi.org/10.5281/zenodo.15019189)
 
 Developed by Nawar Dalila
