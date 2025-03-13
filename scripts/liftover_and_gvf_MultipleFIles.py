@@ -144,6 +144,9 @@ def process_vcf(input_vcf, output_gvf):
                     variant_type = "DEL"
                 elif cn >= 2:
                     variant_type = "DUP"
+            if sample_sex == "female":
+                if cn == 2:
+                    continue  # Skip this variant for males with CN == 1
 
             attributes = f"ID={id_value};Reference_seq={reference_seq};Genotype={gt};Copy_number={cn};Num_points:{np};sample:{sample_name}"
             gvf_out.write(f"{chrom_hg19}\t{source}\t{variant_type}\t{start_liftover}\t{end_liftover}\t{score}\t{strand}\t{phase}\t{attributes}\n")
