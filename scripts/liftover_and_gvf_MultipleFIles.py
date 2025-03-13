@@ -192,3 +192,4 @@ if __name__ == "__main__":
         process_vcf(vcf_file, output_gvf)
 
     print("Processing complete!")
+## END
