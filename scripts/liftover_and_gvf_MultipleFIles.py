@@ -50,8 +50,8 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 # Define relative paths
 LIFTOVER_BIN = os.path.join(SCRIPT_DIR, "helper", "liftOver")
 CHAIN_FILE = os.path.join(SCRIPT_DIR, "helper", "hg38ToHg19.over.chain.gz")
-RESULTS_DIR = os.path.join(SCRIPT_DIR, "..", "test_data", "results")
-TEMP_DIR = os.path.join(SCRIPT_DIR, "..", "test_data", "temp")
+RESULTS_DIR = os.path.join(SCRIPT_DIR, "..", "results")
+TEMP_DIR = os.path.join(SCRIPT_DIR, "..", "results", "temp")
 
 # Ensure results directory exists
 os.makedirs(RESULTS_DIR, exist_ok=True)
