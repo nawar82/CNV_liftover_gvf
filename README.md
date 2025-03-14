@@ -3,6 +3,8 @@ Liftover CNV VCF Files from hg38 to hg19 and Convert to GVF
 This script automates the processing of Copy Number Variation (CNV) VCF files generated
 by GATK gCNV. It can optionally perform liftover from hg38 to hg19 and convert
 the VCF data into GVF format.
+### Outputs
+Corresponding GVF files in the results foled (same level of the scripts folder) with Genotype,Copy_number,Num_points,and sample name in the attributes in addition to all other standard GVF fields (seqid,source,type,start,end,score,strand,phase,attributes)
 
 ### Features:
 - Reads a list of VCF file paths from an input text file.

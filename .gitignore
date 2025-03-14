@@ -8,3 +8,4 @@ test_data/*
 
 scripts/liftover_and_gvf_OneSample.py
 scripts/VCFtoGVF.py
+results/
