@@ -1,20 +1,28 @@
+# syntax=docker/dockerfile:1    ## While optional, this directive instructs the Docker builder what syntax to use when parsing the Dockerfile
+                                ## We recommend using docker/dockerfile:1, which always points to the latest release of the version 1 syntax.
+                                ## BuildKit automatically checks for updates of the syntax before building, making sure you are using the most current version.
+
 FROM python:3.10.6-slim-buster
 
-COPY api api
-COPY research_topics_ranker research_topics_ranker
-COPY notebooks notebooks
-COPY setup.py setup.py
+# Set the working directory inside the container
+WORKDIR /app
+
+COPY results results
+COPY scripts/liftover_and_gvf_MultipleFIles.py scripts/liftover_and_gvf_MultipleFIles.py
+COPY scripts/helper scripts/helper
+COPY scripts/__init__.py scripts/__init__.py
+
 COPY __init__.py __init__.py
-COPY Makefile Makefile
 COPY .envrc .envrc
+COPY .env .env
 COPY requirements.txt requirements.txt
 COPY .gitignore .gitignore
+COPY test_data/file_list.txt test_data/file_list.txt
+COPY test_data/input.vcf test_data/input.vcf
+COPY test_data/input2.vcf test_data/input2.vcf
 
+RUN pip install --no-cache-dir -r requirements.txt
+#RUN pip install -e .
 
-RUN pip install -r requirements.txt
-RUN pip install -e .
-
-# For local
-#CMD uvicorn api.fast:app --host 0.0.0.0
-# For deployment
-CMD uvicorn api.fast:app --host 0.0.0.0  --port $PORT
+# Set the entrypoint to Python so users can run the script easily
+ENTRYPOINT ["python", "./scripts/liftover_and_gvf_MultipleFIles.py"]
