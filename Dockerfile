@@ -5,7 +5,7 @@
 FROM python:3.10.6-slim-buster
 
 # Set the working directory inside the container
-WORKDIR /app
+#WORKDIR /app
 
 COPY results results
 COPY scripts/liftover_and_gvf_MultipleFIles.py scripts/liftover_and_gvf_MultipleFIles.py
@@ -17,9 +17,9 @@ COPY .envrc .envrc
 COPY .env .env
 COPY requirements.txt requirements.txt
 COPY .gitignore .gitignore
-COPY test_data/file_list.txt test_data/file_list.txt
-COPY test_data/input.vcf test_data/input.vcf
-COPY test_data/input2.vcf test_data/input2.vcf
+#COPY test_data/file_list.txt test_data/file_list.txt
+#COPY test_data/input.vcf test_data/input.vcf
+#COPY test_data/input2.vcf test_data/input2.vcf
 
 RUN pip install --no-cache-dir -r requirements.txt
 #RUN pip install -e .
