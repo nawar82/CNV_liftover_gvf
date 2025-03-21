@@ -1,0 +1,9 @@
+## Run the docker image interactively in a bash shell and mount the folders you need.
+### Basically the first folder before the colon is relative to your directory outside of the docker image
+### while the second folder is inside the docker, so better to be similar for the script to work and for easiness
+#### Think about whrere are you placing the file that has list of files as well as where is it pointing at, also the relative paths
+
+
+docker run -it --entrypoint /bin/bash -v ./test_data:/test_data -v ./results:/results cnv_liftover_gvf
+
+python ./scripts/liftover_and_gvf_MultipleFIles.py -i ./test_data/file_list.txt
