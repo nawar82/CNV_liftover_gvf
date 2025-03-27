@@ -3,7 +3,20 @@
 ### while the second folder is inside the docker, so better to be similar for the script to work and for easiness
 #### Think about whrere are you placing the file that has list of files as well as where is it pointing at, also the relative paths
 
+# Notice: -v <outside_path>:<inside_path>
 
 docker run -it --entrypoint /bin/bash -v ./test_data:/test_data -v ./results:/results cnv_liftover_gvf
 
 python ./scripts/liftover_and_gvf_MultipleFIles.py -i ./test_data/file_list.txt
+
+###############################################
+'''
+On Windows:
+
+docker load -i cnv_liftover_gvf.tar
+
+docker run -it --entrypoint /bin/bash -v "C:\Users\ndal0013\Desktop\test_data":/data -v "C:\Users\ndal0013\Desktop\results":/results cnv_liftover_gvf
+
+python ./scripts/liftover_and_gvf_MultipleFIles.py -i ./data/file_list.txt
+'''
+##################################################
