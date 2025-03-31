@@ -19,9 +19,9 @@ python ./scripts/liftover_and_gvf_MultipleFIles.py -i ./test_data/file_list.txt
 '''
 On Windows:
 
-docker load -i cnv_liftover_gvf.tar
+docker load -i cnv_liftover_gvf_with_glibc.tar
 
-docker run -it --entrypoint /bin/bash -v "C:\Users\ndal0013\Desktop\test_data":/data -v "C:\Users\ndal0013\Desktop\results":/results cnv_liftover_gvf
+docker run -it --entrypoint /bin/bash -v "C:\Users\ndal0013\Desktop\test_data":/data -v "C:\Users\ndal0013\Desktop\results":/results cnv_liftover_gvf_with_glibc
 
 python ./scripts/liftover_and_gvf_MultipleFIles.py -i ./data/file_list.txt
 '''
