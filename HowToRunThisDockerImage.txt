@@ -1,3 +1,9 @@
+##############################################
+# Building the image
+# docker build -t cnv_liftover_gvf_with_glibc .
+# docker save -o cnv_liftover_gvf_with_glibc.tar cnv_liftover_gvf_with_glibc
+************************************************
+
 ## Run the docker image interactively in a bash shell and mount the folders you need.
 ### Basically the first folder before the colon is relative to your directory outside of the docker image
 ### while the second folder is inside the docker, so better to be similar for the script to work and for easiness

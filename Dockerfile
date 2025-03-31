@@ -4,6 +4,8 @@
 
 FROM python:3.10.6-slim-buster
 
+RUN apt-get update && apt-get install -y libc6  # libc6 is the package name for the GNU C Library (glibc) in Debian-based systems (like Ubuntu)
+                                                # This is because the apptainer image (singularity also) doesn't work well with liftover without this package
 # Set the working directory inside the container
 #WORKDIR /app
 
