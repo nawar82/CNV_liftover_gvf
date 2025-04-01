@@ -1,3 +1,9 @@
+##############################################
+# Building the image
+# docker build -t cnv_liftover_gvf_with_glibc .
+# docker save -o cnv_liftover_gvf_with_glibc.tar cnv_liftover_gvf_with_glibc
+************************************************
+
 ## Run the docker image interactively in a bash shell and mount the folders you need.
 ### Basically the first folder before the colon is relative to your directory outside of the docker image
 ### while the second folder is inside the docker, so better to be similar for the script to work and for easiness
@@ -13,9 +19,9 @@ python ./scripts/liftover_and_gvf_MultipleFIles.py -i ./test_data/file_list.txt
 '''
 On Windows:
 
-docker load -i cnv_liftover_gvf.tar
+docker load -i cnv_liftover_gvf_with_glibc.tar
 
-docker run -it --entrypoint /bin/bash -v "C:\Users\ndal0013\Desktop\test_data":/data -v "C:\Users\ndal0013\Desktop\results":/results cnv_liftover_gvf
+docker run -it --entrypoint /bin/bash -v "C:\Users\ndal0013\Desktop\test_data":/data -v "C:\Users\ndal0013\Desktop\results":/results cnv_liftover_gvf_with_glibc
 
 python ./scripts/liftover_and_gvf_MultipleFIles.py -i ./data/file_list.txt
 '''

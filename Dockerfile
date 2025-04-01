@@ -2,8 +2,10 @@
                                 ## We recommend using docker/dockerfile:1, which always points to the latest release of the version 1 syntax.
                                 ## BuildKit automatically checks for updates of the syntax before building, making sure you are using the most current version.
 
-FROM python:3.10.6-slim-buster
+FROM python:3.14-rc-bookworm
 
+RUN apt-get update && apt-get install -y libc6  # libc6 is the package name for the GNU C Library (glibc) in Debian-based systems (like Ubuntu)
+                                                # This is because the apptainer image (singularity also) doesn't work well with liftover without this package
 # Set the working directory inside the container
 #WORKDIR /app
 
